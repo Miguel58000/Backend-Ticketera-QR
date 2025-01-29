@@ -1,13 +1,17 @@
 import express from "express";
+import cors from "cors"; // Importar CORS
 import { prisma } from "./prisma.js"; // Importa Prisma Client
 
 const app = express();
 const port = process.env.PORT || 3000;
 
+app.use(cors()); // Habilita CORS
 app.use(express.json());
+
 app.get("/", (req, res) => {
-  res.send('Hola');
+  res.send("Hola");
 });
+
 const server = app.listen(port, () => {
   console.log(`Server started on port ${port}`);
 });

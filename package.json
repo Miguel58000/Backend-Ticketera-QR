@@ -4,7 +4,7 @@
   "description": "Backend del proyecto de Ticketera QR",
   "main": "index.js",
   "scripts": {
-    "dev": "tsx watch index.ts"
+    "dev":  "nodemon --exec tsx src/index.ts"
   },
   "repository": {
     "type": "git",
@@ -27,6 +27,7 @@
   "devDependencies": {
     "@types/express": "^5.0.0",
     "@types/node": "^22.10.10",
+    "nodemon": "^3.1.9",
     "tsx": "^4.19.2",
     "typescript": "^5.7.3"
   }

@@ -1,0 +1,77 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Categoria {
+  id              Int      @id @default(autoincrement())
+  nombreCategoria String
+  eventos         Evento[]
+}
+
+model Organizacion {
+  idOrganizacion Int      @id @default(autoincrement())
+  ubicacion      String
+  mail           String   @unique
+  nombre         String
+  quit           String
+  contraseña    String
+  eventos        Evento[]
+}
+
+model Evento {
+  idEvento        Int          @id @default(autoincrement())
+  nombre          String
+  fechaCreacion   DateTime
+  fechaHoraEvento DateTime
+  capacidadMax    Int
+  descripcion     String?
+  idCategoria     Int
+  idOrganizacion  Int
+  categoria       Categoria    @relation(fields: [idCategoria], references: [id])
+  organizacion    Organizacion @relation(fields: [idOrganizacion], references: [idOrganizacion])
+  tipoTickets     TipoTicket[]
+}
+
+model TipoTicket {
+  idTipoTicket   Int      @id @default(autoincrement())
+  tipo           String
+  precio         Decimal
+  acceso         String
+  cantMaxPorTipo Int
+  idEvento       Int
+  tickets        Ticket[]
+  evento         Evento   @relation(fields: [idEvento], references: [idEvento])
+}
+
+model Cliente {
+  idCliente       Int      @id @default(autoincrement())
+  contraseña     String
+  nombre          String
+  apellido        String
+  tipoDoc         String
+  nroDoc          String   @unique
+  fechaNacimiento DateTime
+  mail            String   @unique
+  tickets         Ticket[]
+}
+
+model Ticket {
+  nroTicket     Int        @id @default(autoincrement())
+  fechaCreacion DateTime
+  tokenQr       String     @unique
+  estado        String
+  idTipoTicket  Int
+  idCliente     Int
+  cliente       Cliente    @relation(fields: [idCliente], references: [idCliente])
+  tipoTicket    TipoTicket @relation(fields: [idTipoTicket], references: [idTipoTicket])
+}
+
+model Politica {
+  fechaVigencia   DateTime @id
+  tiempoReembolso Int
+}

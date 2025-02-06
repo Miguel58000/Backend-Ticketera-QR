@@ -19,7 +19,7 @@ export const crearCategoria = async (req: Request, res: Response) => {
     res.status(500).json({
       message: "Error al crear la categoria",
       error: true,
-      details: (error as Error).message, // 👈 Casting a Error,
+      details: (error as Error).message, 
     });
   }
 }
@@ -42,17 +42,18 @@ const obtenerCategorias = async (req: Request, res: Response) => {
   }
 }
 
-const eliminarCategoria = async (req:Request, res: Response) => {
+const eliminarCategoria = async (req:Request, res: Response):Promise<void> => {
   try {
     const { id } = req.params;
     const categoriaEliminada = await prisma.categoria.delete({
       where: { id: parseInt(id) },
     });
     if (!categoriaEliminada) {
-      return res.status(404).json({
+      res.status(404).json({
         message: "Categoria no encontrada",
         error: true,
       });
+      return;
     }
     res.status(200).json({
       message: "Categoria eliminada con éxito",
@@ -62,7 +63,7 @@ const eliminarCategoria = async (req:Request, res: Response) => {
     res.status(500).json({
       message: "Error al eliminar la categoria",
       error: true,
-      details: (error as Error).message, // 👈 Casting a Error,
+      details: (error as Error).message, 
     });
   }
 }

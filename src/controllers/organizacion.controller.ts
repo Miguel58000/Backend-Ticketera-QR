@@ -47,7 +47,7 @@ const obtenerOrganizaciones = async (req: Request, res: Response) => {
   }
 }
 
-const obtenerOrganizacionPorId = async (req: Request, res: Response) => {
+const obtenerOrganizacionPorId = async (req: Request, res: Response):Promise<void> => {
   try {
     const { id } = req.params;
     const organizacion = await prisma.organizacion.findUnique({
@@ -55,10 +55,11 @@ const obtenerOrganizacionPorId = async (req: Request, res: Response) => {
     });
 
     if (!organizacion) {
-      return res.status(404).json({
+      res.status(404).json({
         message: "Organización no encontrada",
         error: true,
       });
+      return;
     }
 
     res.status(200).json({
@@ -74,17 +75,18 @@ const obtenerOrganizacionPorId = async (req: Request, res: Response) => {
     });
   }
 }
-const eliminarOrganizacion = async (req: Request, res: Response) => {
+const eliminarOrganizacion = async (req: Request, res: Response):Promise<void> => {
   try {
     const { id } = req.params;
     const organizacionEliminada = await prisma.organizacion.delete({
       where: { idOrganizacion: parseInt(id) },
     });
     if (!organizacionEliminada) {
-      return res.status(404).json({
+      res.status(404).json({
         message: "Organización no encontrada",
         error: true,
       });
+      return;
     }
     res.status(200).json({
       message: "Organización eliminada con éxito",

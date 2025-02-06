@@ -1,8 +1,9 @@
 import { error } from "console";
 import {prisma} from "../prisma.js"
+import { Request, Response } from "express";
 
 // Crear una Categoria
-export const crearCategoria = async (req, res) => {
+export const crearCategoria = async (req: Request, res: Response) => {
   try {
     const categoria = await prisma.categoria.create({
       data: req.body,
@@ -18,12 +19,12 @@ export const crearCategoria = async (req, res) => {
     res.status(500).json({
       message: "Error al crear la categoria",
       error: true,
-      details: error.message,
+      details: (error as Error).message, // 👈 Casting a Error,
     });
   }
 }
 
-const obtenerCategorias = async (req, res) => {
+const obtenerCategorias = async (req: Request, res: Response) => {
   try {
     const categorias = await prisma.categoria.findMany();
     res.status(200).json({
@@ -36,12 +37,12 @@ const obtenerCategorias = async (req, res) => {
     res.status(500).json({
       message: "Error al obtener las Categorias",
       error: true,
-      details: error.message,
+      details: (error as Error).message, // 👈 Casting a Error,
     });
   }
 }
 
-const eliminarCategoria = async (req, res) => {
+const eliminarCategoria = async (req:Request, res: Response) => {
   try {
     const { id } = req.params;
     const categoriaEliminada = await prisma.categoria.delete({
@@ -61,7 +62,7 @@ const eliminarCategoria = async (req, res) => {
     res.status(500).json({
       message: "Error al eliminar la categoria",
       error: true,
-      details: error.message,
+      details: (error as Error).message, // 👈 Casting a Error,
     });
   }
 }

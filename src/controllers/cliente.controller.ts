@@ -1,8 +1,9 @@
 import { error } from "console";
 import {prisma} from "../prisma.js"
+import { Request, Response } from "express";
 
 // Crear un cliente
-export const crearCliente = async (req, res) => {
+export const crearCliente = async (req: Request, res: Response) => {
   try {
     const cliente = await prisma.cliente.create({
       data: req.body,
@@ -18,12 +19,12 @@ export const crearCliente = async (req, res) => {
     res.status(500).json({
       message: "Error al crear el cliente",
       error: true,
-      details: error.message,
+      details: (error as Error).message, // Casting a Error,
     });
   }
 }
 
-const obtenerClientes = async (req, res) => {
+const obtenerClientes = async (req: Request, res: Response) => {
   try {
     const clientes = await prisma.cliente.findMany();
     res.status(200).json({
@@ -36,12 +37,12 @@ const obtenerClientes = async (req, res) => {
     res.status(500).json({
       message: "Error al obtener los clientes",
       error: true,
-      details: error.message,
+      details: (error as Error).message,
     });
   }
 }
 
-const obtenerClientePorId = async (req, res) => {
+const obtenerClientePorId = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
     const cliente = await prisma.cliente.findUnique({
@@ -64,11 +65,11 @@ const obtenerClientePorId = async (req, res) => {
     res.status(500).json({
       message: "Error al obtener el cliente",
       error: true,
-      details: error.message,
+      details: (error as Error).message,
     });
   }
 }
-const eliminarCliente = async (req, res) => {
+const eliminarCliente = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
     const clienteEliminado = await prisma.cliente.delete({
@@ -88,12 +89,12 @@ const eliminarCliente = async (req, res) => {
     res.status(500).json({
       message: "Error al eliminar el cliente",
       error: true,
-      details: error.message,
+      details: (error as Error).message,
     });
   }
 }
 
-const actualizarCliente = async (req, res) => {
+const actualizarCliente = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
     const clienteData = req.body;
@@ -111,7 +112,7 @@ const actualizarCliente = async (req, res) => {
     res.status(500).json({
       message: "Error al actualizar el cliente",
       error: true,
-      details: error.message,
+      details: (error as Error).message,
     });
   }
 }

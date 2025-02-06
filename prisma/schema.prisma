@@ -72,6 +72,7 @@ model Cliente {
 model Ticket {
   nroTicket       Int       @id @default(autoincrement())
   fechaCreacion   DateTime
+  estado          String
   tokenQr         String   @unique
   idTipoTicket    Int
   idCliente       Int

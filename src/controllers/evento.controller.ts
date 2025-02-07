@@ -19,7 +19,8 @@ const crearEvento = async (req: Request, res: Response) => {
 
     // 📌 Validaciones básicas
     if (!nombre || !fechaCreacion || !fechaHoraEvento || !capacidadMax || !foto || !idCategoria || !idOrganizacion) {
-      return res.status(400).json({ message: "Todos los campos son obligatorios", error: true });
+      res.status(400).json({ message: "Todos los campos son obligatorios", error: true });
+      return;
     }
 
     // 📌 Convertir fechas a objetos Date
@@ -40,11 +41,13 @@ const crearEvento = async (req: Request, res: Response) => {
       },
     });
 
-    return res.status(201).json({ message: "Evento creado con éxito", evento });
+    res.status(201).json({ message: "Evento creado con éxito", evento });
+    return;
 
   } catch (error) {
     console.error("Error al crear el evento:", error);
-    return res.status(500).json({ message: "Error interno del servidor", error: true });
+    res.status(500).json({ message: "Error interno del servidor", error: true });
+    return;
   }
 };
 
@@ -146,5 +149,4 @@ const actualizarEvento = async (req: Request, res: Response) => {
   }
 }
 
-
-export default {crearEvento, obtenerEventos, obtenerEventosPorId, eliminarEvento, actualizarEvento};
+export default { obtenerEventos, obtenerEventosPorId, eliminarEvento, actualizarEvento, crearEvento };

@@ -46,7 +46,7 @@ const eliminarCategoria = async (req:Request, res: Response):Promise<void> => {
   try {
     const { id } = req.params;
     const categoriaEliminada = await prisma.categoria.delete({
-      where: { id: parseInt(id) },
+      where: { idCategoria: parseInt(id) },
     });
     if (!categoriaEliminada) {
       res.status(404).json({

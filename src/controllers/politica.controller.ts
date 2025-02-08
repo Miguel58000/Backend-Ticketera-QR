@@ -2,7 +2,7 @@ import { error } from "console";
 import {prisma} from "../prisma.js"
 import { Request, Response } from "express";
 
-// Crear ua Politica
+// Crear una Politica
 export const crearPolitica = async (req:Request, res:Response) => {
   try {
     const politica = await prisma.politica.create({

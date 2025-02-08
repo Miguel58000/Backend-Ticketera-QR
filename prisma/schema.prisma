@@ -8,8 +8,8 @@ datasource db {
 }
 
 model Categoria {
-  id              Int      @id @default(autoincrement())
   nombreCategoria String
+  idCategoria     Int      @id @default(autoincrement())
   eventos         Evento[]
 }
 
@@ -18,8 +18,8 @@ model Organizacion {
   ubicacion      String
   mail           String   @unique
   nombre         String
-  quit           String
   contraseña    String
+  cuit           String
   eventos        Evento[]
 }
 
@@ -32,7 +32,8 @@ model Evento {
   descripcion     String?
   idCategoria     Int
   idOrganizacion  Int
-  categoria       Categoria    @relation(fields: [idCategoria], references: [id])
+  foto            String
+  categoria       Categoria    @relation(fields: [idCategoria], references: [idCategoria])
   organizacion    Organizacion @relation(fields: [idOrganizacion], references: [idOrganizacion])
   tipoTickets     TipoTicket[]
 }
@@ -66,6 +67,7 @@ model Ticket {
   tokenQr       String     @unique
   idTipoTicket  Int
   idCliente     Int
+  estado        String
   cliente       Cliente    @relation(fields: [idCliente], references: [idCliente])
   tipoTicket    TipoTicket @relation(fields: [idTipoTicket], references: [idTipoTicket])
 }

@@ -46,7 +46,7 @@ model TipoTicket {
   cantMaxPorTipo Int
   idEvento       Int
   tickets        Ticket[]
-  evento         Evento   @relation(fields: [idEvento], references: [idEvento])
+  evento         Evento   @relation(fields: [idEvento], references: [idEvento],onDelete: Cascade)
 }
 
 model Cliente {

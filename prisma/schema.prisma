@@ -18,7 +18,7 @@ model Organizacion {
   ubicacion      String
   mail           String   @unique
   nombre         String
-  contraseña    String
+  contraseña     String
   cuit           String
   eventos        Evento[]
 }
@@ -51,7 +51,7 @@ model TipoTicket {
 
 model Cliente {
   idCliente       Int      @id @default(autoincrement())
-  contraseña     String
+  contraseña      String
   nombre          String
   apellido        String
   tipoDoc         String
@@ -63,16 +63,25 @@ model Cliente {
 
 model Ticket {
   nroTicket     Int        @id @default(autoincrement())
-  fechaCreacion DateTime
+  fechaCreacion DateTime   @default(now())
   tokenQr       String     @unique
   idTipoTicket  Int
   idCliente     Int
-  estado        String
+  estado        EstadoTicket     @default(pagado)
   cliente       Cliente    @relation(fields: [idCliente], references: [idCliente])
   tipoTicket    TipoTicket @relation(fields: [idTipoTicket], references: [idTipoTicket])
 }
 
 model Politica {
-  fechaVigencia   DateTime @id
+  fechaVigencia   DateTime @id  @default(now())
   tiempoReembolso Int
+}
+
+
+// Valores posibles de Ticket.estado
+enum EstadoTicket {
+  pagado
+  consumido
+  expirado
+  reembolsado
 }

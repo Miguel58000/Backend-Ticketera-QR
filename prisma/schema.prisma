@@ -5,6 +5,7 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 model Categoria {
@@ -46,7 +47,7 @@ model TipoTicket {
   cantMaxPorTipo Int
   idEvento       Int
   tickets        Ticket[]
-  evento         Evento   @relation(fields: [idEvento], references: [idEvento],onDelete: Cascade)
+  evento         Evento   @relation(fields: [idEvento], references: [idEvento], onDelete: Cascade)
 }
 
 model Cliente {

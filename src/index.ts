@@ -1,12 +1,16 @@
 import express from "express";
-import cors from "cors"; // Importar CORS
-import { prisma } from "./prisma.js"; // Importa Prisma Client
-import mainRouter from "./routes/app.routes.js"; // Importa el enrutador principal
+import cors from "cors";
+import dotenv from "dotenv";
+import { prisma } from "./prisma.js";
+import mainRouter from "./routes/app.routes.js";
+
+// Cargar variables de entorno
+dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 3000;
 
-app.use(cors()); // Habilita CORS
+app.use(cors());
 app.use(express.json());
 
 app.get("/", (req, res) => {
@@ -29,6 +33,5 @@ const shutdown = async () => {
 };
 
 // Capturar señales para cierre seguro
-process.on("SIGINT", shutdown); // Ctrl + C en terminal
-process.on("SIGTERM", shutdown); // Signal de contenedores (Docker, Kubernetes)
- 
+process.on("SIGINT", shutdown);
+process.on("SIGTERM", shutdown);

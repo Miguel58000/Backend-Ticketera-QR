@@ -6,9 +6,7 @@ dotenv.config();
 
 // Determinar la URL de conexión según el entorno
 const databaseUrl =
-  process.env.NODE_ENV === "development"
-    ? process.env.DATABASE_URL_DEV
-    : process.env.DATABASE_URL;
+  process.env.DATABASE_URL
 
 const globalForPrisma = global as unknown as { prisma?: PrismaClient };
 
